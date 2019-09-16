@@ -43,7 +43,7 @@ function newSource(ani, newCanvas, data, coords){
   var canvas = document.getElementById(newCanvas);
   var gl = canvas.getContext('webgl', {antialiasing: true});
   var wind = new WindGL(gl);
-  wind.numParticles = 10000;
+  wind.numParticles = 20 * 20;
 
   updateWind(data);
 
