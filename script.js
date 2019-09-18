@@ -1,5 +1,37 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2xvYmFsLWRhdGEtdmlld2VyIiwiYSI6ImNqdG9lYWQ3NTFsNWk0M3Fqb2Q5dXBpeWUifQ.3DvxuGByM33VNa59rDogWw';
 
+var files = [
+  'layer00',
+  'layer21',
+  'layer22',
+  'layer23',
+  'layer24',
+  'layer41'
+]
+
+function loadData(url){
+
+  function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+      if (rawFile.readyState === 4 && rawFile.status == "200") {
+        callback(rawFile.responseText);
+      }
+    }
+    rawFile.send(null);
+  }
+  readTextFile(url, function(text){
+    boundary.push(JSON.parse(text).boundary)
+    zoom.push(JSON.parse(text).zoom)
+  });
+}
+
+for(i=0; i<files.length; i++){
+    loadData('./wind/'+ files[i] +'.json')
+  }
+
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/dark-v10',

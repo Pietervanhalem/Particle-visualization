@@ -1,17 +1,8 @@
 var boundary = []
 var zoom = []
 
-var files = [
-  'layer00',
-  'layer21',
-  'layer22',
-  'layer23',
-  'layer24',
-  'layer41'
-]
-
 var whiteRampColors = {
-  0.0: '#00000000',
+  0.0: '#ffffffff',
   0.1: '#ffffffff',
   1.0: '#ffffffff'
 };
@@ -44,53 +35,33 @@ var cmoceanRampColors = {
   1.000: '#fffdcdff'
 };
 
-function loadData(url){
-
-  function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
-      if (rawFile.readyState === 4 && rawFile.status == "200") {
-        callback(rawFile.responseText);
-      }
-    }
-    rawFile.send(null);
-  }
-  readTextFile(url, function(text){
-    boundary.push(JSON.parse(text).boundary)
-    zoom.push(JSON.parse(text).zoom)
-  });
-}
-
-
-function addCanvas(Q){
+function addCanvas(fileIndex){
   if(
-    mapInFrame(Q) &&
-      map.getZoom() >= zoom[Q][0] &&
-      map.getZoom() < zoom[Q][1]
+    mapInFrame(fileIndex) &&
+      map.getZoom() >= zoom[fileIndex][0] &&
+      map.getZoom() < zoom[fileIndex][1]
   ){
-    if(typeof map.getLayer('overlay' + 'canvas-' + files[Q]) == 'undefined'){
+    if(typeof map.getLayer('overlay' + 'canvas-' + files[fileIndex]) == 'undefined'){
       var canv=document.createElement('canvas');
-      canv.id = 'canvas-' + files[Q]
+      canv.id = 'canvas-' + files[fileIndex]
       canv.width = 1440
       canv.height = 720
       let debugElement = document.getElementById('debug')
       debugElement.appendChild(canv)
 
       newSource(
-        'canvas-' + files[Q],
-        files[Q],
-        boundary[Q],
-        cmoceanRampColors
+        'canvas-' + files[fileIndex],
+        files[fileIndex],
+        boundary[fileIndex],
+        whiteRampColors
       )
     }
   }else{
-    if(typeof map.getLayer('overlay' + 'canvas-' + files[Q]) != 'undefined'){
+    if(typeof map.getLayer('overlay' + 'canvas-' + files[fileIndex]) != 'undefined'){
 
-      var canv = document.getElementById('canvas-' + files[Q])
-      map.removeLayer('overlay' + 'canvas-' + files[Q]);
-      map.removeSource('canvas-' + files[Q])
+      var canv = document.getElementById('canvas-' + files[fileIndex])
+      map.removeLayer('overlay' + 'canvas-' + files[fileIndex]);
+      map.removeSource('canvas-' + files[fileIndex])
       var gl = canv.getContext('webgl');
       gl.getExtension('WEBGL_lose_context').loseContext()
       let debugElement = document.getElementById('debug')
@@ -98,30 +69,11 @@ function addCanvas(Q){
     }
   }
 }
-
-map.on('load', function(){
-  for(i=0; i<files.length; i++){
-    loadData('./wind/'+ files[i] +'.json')
-  }
-  map.on('zoom', function(){
-    for(j=0; j<files.length;j++){
-      addCanvas(j)
-    }
-  })
-
-  map.on('move', function(){
-    for(j=0; j<files.length;j++){
-      addCanvas(j)
-    }
-  })
-
-})
-
-
-function mapInFrame(Q){
+  
+function mapInFrame(fileIndex){
   var temp = false
 
-  var points = boundary[Q]
+  var points = boundary[fileIndex]
 
   var a = map.getBounds()._sw.lng
   var b = map.getBounds()._ne.lng
@@ -142,10 +94,10 @@ function mapInFrame(Q){
 
   var points = [[x1,y1],[x1,y2],[x2,y1],[x2,y2],[(x1+x2)/2, y1],[(x1+x2)/2, y2], [x1, (y1+y2)/2], [x2, (y1+y2)/2] ]
 
-  var x1 = Math.min(boundary[Q][0][0], boundary[Q][1][0])
-  var x2 = Math.max(boundary[Q][0][0], boundary[Q][1][0])
-  var y1 = Math.min(boundary[Q][2][1], boundary[Q][1][1])
-  var y2 = Math.max(boundary[Q][2][1], boundary[Q][1][1])
+  var x1 = Math.min(boundary[fileIndex][0][0], boundary[fileIndex][1][0])
+  var x2 = Math.max(boundary[fileIndex][0][0], boundary[fileIndex][1][0])
+  var y1 = Math.min(boundary[fileIndex][2][1], boundary[fileIndex][1][1])
+  var y2 = Math.max(boundary[fileIndex][2][1], boundary[fileIndex][1][1])
   for (i = 0; i < 4; i++) {
     if ((x1 < points[i][0]) && (points[i][0] < x2) &&
         (y1 < points[i][1]) && (points[i][1] < y2)) {
@@ -154,3 +106,17 @@ function mapInFrame(Q){
   }
   return temp
 }
+
+map.on('load', function(){
+    addCanvas(0)
+    map.on('zoom', function(){
+        for(j=0; j<files.length;j++){
+        addCanvas(j)
+        }
+    })
+    map.on('move', function(){
+        for(j=0; j<files.length;j++){
+        addCanvas(j)
+        }
+    })
+})
