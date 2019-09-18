@@ -82,7 +82,7 @@ function addCanvas(Q){
         'canvas-' + files[Q],
         files[Q],
         boundary[Q],
-        pietersRampColors
+        cmoceanRampColors
       )
     }
   }else{
@@ -100,21 +100,6 @@ function addCanvas(Q){
 }
 
 map.on('load', function(){
-  var canv=document.createElement('canvas');
-  canv.id = 'canvas-layer00'
-  canv.width = 1440
-  canv.height = 720
-
-  let debugElement = document.getElementById('debug')
-  debugElement.appendChild(canv)
-
-  newSource(
-    'canvas-layer00',
-    'layer00',
-    [[-180, 81],[180, 81],[180, -81],[-180, -81]],
-    pietersRampColors
-  )
-
   for(i=0; i<files.length; i++){
     loadData('./wind/'+ files[i] +'.json')
   }
