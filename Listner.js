@@ -9,10 +9,10 @@ var zoom = []
 
 var files = [
     'layer00',
-    // 'layer21',
-    // 'layer22',
-    // 'layer23',
-    // 'layer24',
+    'layer21',
+    'layer22',
+    'layer23',
+    'layer24',
 ]
 
 function loadData(url){
@@ -65,7 +65,7 @@ map.on('load', function(){
     for(i=0; i<files.length; i++){
         loadData('./wind3/'+ files[i] +'.json')
     }
-
+    console.log(files, boundary , zoom)
     map.on('zoom', function(){
         for(j=0; j<files.length;j++){
             addCanvas(j)
@@ -75,45 +75,6 @@ map.on('load', function(){
     })
   })
 
-function mapInFrame(index){
-    var temp = false
-
-    var points = boundary[index]
-
-    var a = map.getBounds()._sw.lng
-    var b = map.getBounds()._ne.lng
-
-    a = a + parseInt(a / 180) * 180 
-    b = b + parseInt(b / 180) * 180 
-
-    var x1 = Math.min(a, b)
-    var x2 = Math.max(a, b)
-    var y1 = Math.min(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
-    var y2 = Math.max(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
-    for (i = 0; i < 4; i++) {
-        console.log(x1,x2,y1,y2)
-        if ((x1 < points[i][0]) & (points[i][0] < x2) & 
-            (y1 < points[i][1]) & (points[i][1] < y2)) {
-                temp = true
-            }
-    }
-
-    var points = [[x1,y1],[x1,y2],[x2,y1],[x2,y2]]
-
-    var x1 = Math.min(boundary[index][0][0], boundary[index][1][0])
-    var x2 = Math.max(boundary[index][0][0], boundary[index][1][0])
-    var y1 = Math.min(boundary[index][2][1], boundary[index][1][1])
-    var y2 = Math.max(boundary[index][2][1], boundary[index][1][1])
-
-    for (i = 0; i < 4; i++) {
-        console.log(x1,x2,y1,y2)
-        if ((x1 <= points[i][0]) & (points[i][0] <= x2) & 
-            (y1 <= points[i][1]) & (points[i][1] <= y2)) {
-                temp = true
-            } 
-    }
-     return temp
-}
 
 function mapInFrame2(index){
     var a = map.getBounds()._sw.lng
