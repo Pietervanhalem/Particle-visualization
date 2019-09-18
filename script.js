@@ -43,7 +43,7 @@ function newSource(newCanvas, data, coords, colorRamp){
   var canvas = document.getElementById(newCanvas);
   var gl = canvas.getContext('webgl', {antialiasing: true});
   var wind = new WindGL(gl, colorRamp);
-  wind.fadeOpacity = 0.9; 
+  wind.fadeOpacity = 0.7; 
   wind.numParticles = 10000;
 
   updateWind(data);

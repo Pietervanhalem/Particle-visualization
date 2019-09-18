@@ -29,8 +29,8 @@ var defaultRampColors = {
 
 var pietersRampColors = {
     0.0: '#5500ff00',
-    0.2: '#000099ff',
-    0.3: '#999999ff',
+    0.2: '#00009955',
+    0.3: '#99999999',
     1.0: '#ffffffff'
 };
 
@@ -43,43 +43,6 @@ var cmoceanRampColors = {
     0.833: '#e1cd73ff', 
     1.000: '#fffdcdff'
 };
-
-function mapInFrame(Q){
-    var temp = false
-
-    var points = boundary[Q]
-
-    var a = map.getBounds()._sw.lng
-    var b = map.getBounds()._ne.lng
-
-    a = a - parseInt(a / 180) * 180 
-    b = b - parseInt(b / 180) * 180 
-
-    var x1 = Math.min(a, b)
-    var x2 = Math.max(a, b)
-    var y1 = Math.min(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
-    var y2 = Math.max(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
-    for (i = 0; i < 4; i++) {
-        if ((x1 < points[i][0]) && (points[i][0] < x2) && 
-            (y1 < points[i][1]) && (points[i][1] < y2)) {
-                temp = true
-            }
-    }
-
-    var points = [[x1,y1],[x1,y2],[x2,y1],[x2,y2],[(x1+x2)/2, y1],[(x1+x2)/2, y2], [x1, (y1+y2)/2], [x2, (y1+y2)/2] ]
-
-    var x1 = Math.min(boundary[Q][0][0], boundary[Q][1][0])
-    var x2 = Math.max(boundary[Q][0][0], boundary[Q][1][0])
-    var y1 = Math.min(boundary[Q][2][1], boundary[Q][1][1])
-    var y2 = Math.max(boundary[Q][2][1], boundary[Q][1][1])
-    for (i = 0; i < 4; i++) {
-        if ((x1 < points[i][0]) && (points[i][0] < x2) && 
-            (y1 < points[i][1]) && (points[i][1] < y2)) {
-                temp = true
-            } 
-    }
-     return temp
-}
 
 function loadData(url){
 
@@ -136,6 +99,20 @@ function addCanvas(Q){
 }
 
 map.on('load', function(){
+    var canv=document.createElement('canvas');
+    canv.id = 'canvas-layer00'
+    canv.width = 1440
+    canv.height = 720
+    canv.style.display = 'none'
+    document.body.appendChild(canv)
+
+    newSource(
+        'canvas-layer00',
+        'layer00', 
+        [[-180, 81],[180, 81],[180, -81],[-180, -81]],
+        pietersRampColors
+        )
+
     for(i=0; i<files.length; i++){
         loadData('./wind/'+ files[i] +'.json')
     }
@@ -145,10 +122,48 @@ map.on('load', function(){
         }
     })
 
-    map.on('zoom', function(){
+    map.on('move', function(){
         for(j=0; j<files.length;j++){
             addCanvas(j)
         }
     })
     
   })
+
+
+function mapInFrame(Q){
+    var temp = false
+
+    var points = boundary[Q]
+
+    var a = map.getBounds()._sw.lng
+    var b = map.getBounds()._ne.lng
+
+    a = a - parseInt(a / 180) * 180 
+    b = b - parseInt(b / 180) * 180 
+
+    var x1 = Math.min(a, b)
+    var x2 = Math.max(a, b)
+    var y1 = Math.min(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
+    var y2 = Math.max(map.getBounds()._ne.lat, map.getBounds()._sw.lat)
+    for (i = 0; i < 4; i++) {
+        if ((x1 < points[i][0]) && (points[i][0] < x2) && 
+            (y1 < points[i][1]) && (points[i][1] < y2)) {
+                temp = true
+            }
+    }
+
+    var points = [[x1,y1],[x1,y2],[x2,y1],[x2,y2],[(x1+x2)/2, y1],[(x1+x2)/2, y2], [x1, (y1+y2)/2], [x2, (y1+y2)/2] ]
+
+    var x1 = Math.min(boundary[Q][0][0], boundary[Q][1][0])
+    var x2 = Math.max(boundary[Q][0][0], boundary[Q][1][0])
+    var y1 = Math.min(boundary[Q][2][1], boundary[Q][1][1])
+    var y2 = Math.max(boundary[Q][2][1], boundary[Q][1][1])
+    for (i = 0; i < 4; i++) {
+        if ((x1 < points[i][0]) && (points[i][0] < x2) && 
+            (y1 < points[i][1]) && (points[i][1] < y2)) {
+                temp = true
+            } 
+    }
+     return temp
+}
