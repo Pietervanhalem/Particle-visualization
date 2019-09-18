@@ -21,7 +21,7 @@ function getJSON(url, callback) {
   xhr.send();
 }
 
-function newSource(ani, newCanvas, data, coords){
+function newSource(newCanvas, data, coords, colorRamp){
   function updateWind(windFile) {
     getJSON('./wind3/' + windFile + '.json', function (windData) {
         const windImage = new Image();
@@ -37,12 +37,12 @@ function newSource(ani, newCanvas, data, coords){
       if (wind.windData) {
           wind.draw();
       }
-    ani = requestAnimationFrame(frame);
+    requestAnimationFrame(frame);
     }
 
   var canvas = document.getElementById(newCanvas);
   var gl = canvas.getContext('webgl', {antialiasing: true});
-  var wind = new WindGL(gl);
+  var wind = new WindGL(gl, colorRamp);
   wind.fadeOpacity = 0.9; 
   wind.numParticles = 10000;
 

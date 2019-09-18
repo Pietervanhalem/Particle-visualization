@@ -185,7 +185,7 @@ precision highp float;\
          \r\n    float distortion = cos(radians(pos.y * 180.0 - 90.0));\
          \r\n    vec2 offset = vec2(velocity.x / distortion, -velocity.y) * 0.0001 * u_speed_factor;\
          \r\n\r\n    // update particle position, wrapping around the date line\
-         \r\n    pos = fract(1.0 + pos + offset);\
+         \r\n    pos = pos + offset;\
          \r\n\r\n    // a random seed to use for the particle drop\
          \r\n    vec2 seed = (pos + v_tex_pos) * u_rand_seed;\
          \r\n\r\n    // drop rate is a chance a particle will restart at random position, to avoid degeneration\
@@ -203,23 +203,7 @@ precision highp float;\
          \r\n\
          ";
 
-var defaultRampColors = {
-    0.0: '#00000000',
-    0.1: '#ffffffff',
-    1.0: '#ffffffff'
-};
-
-var cmoceanRampColors = {
-    0.000: '#172313ff', 
-    0.166: '#144b2aff', 
-    0.333: '#187328ff', 
-    0.500: '#5f920cff', 
-    0.666: '#aaac20ff', 
-    0.833: '#e1cd73ff', 
-    1.000: '#fffdcdff'
-};
-
-var WindGL = function WindGL(gl) {
+var WindGL = function WindGL(gl, colorRamp) {
     this.gl = gl;
 
     this.fadeOpacity = 0.996; // how fast the particle trails fade on each frame
@@ -234,7 +218,7 @@ var WindGL = function WindGL(gl) {
     this.quadBuffer = createBuffer(gl, new Float32Array([0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1]));
     this.framebuffer = gl.createFramebuffer();
 
-    this.colorRampTexture = createTexture(this.gl, this.gl.LINEAR, getColorRamp(defaultRampColors), 16, 16);
+    this.colorRampTexture = createTexture(this.gl, this.gl.LINEAR, getColorRamp(colorRamp), 16, 16);
     this.resize();
 };
 

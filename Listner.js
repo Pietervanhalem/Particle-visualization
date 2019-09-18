@@ -1,9 +1,3 @@
-var ani01
-
-var ani21
-var ani22
-var ani23
-var ani24
 var boundary = []
 var zoom = []
 
@@ -15,7 +9,24 @@ var files = [
     'layer24',
 ]
 
+var defaultRampColors = {
+    0.0: '#00000000',
+    0.1: '#ffffffff',
+    1.0: '#ffffffff'
+};
+
+var cmoceanRampColors = {
+    0.000: '#172313ff', 
+    0.166: '#144b2aff', 
+    0.333: '#187328ff', 
+    0.500: '#5f920cff', 
+    0.666: '#aaac20ff', 
+    0.833: '#e1cd73ff', 
+    1.000: '#fffdcdff'
+};
+
 function loadData(url){
+
     function readTextFile(file, callback) {
         var rawFile = new XMLHttpRequest();
         rawFile.overrideMimeType("application/json");
@@ -30,7 +41,6 @@ function loadData(url){
     readTextFile(url, function(text){
         boundary.push(JSON.parse(text).boundary)
         zoom.push(JSON.parse(text).zoom)
-
     });
 }
 
@@ -38,16 +48,24 @@ function loadData(url){
 function addCanvas(Q){
         if(map.getZoom() >= zoom[Q][0] && map.getZoom() < zoom[Q][1]){
             if(typeof map.getLayer('overlay' + 'canvas-' + files[Q]) == 'undefined'){
+                var canv=document.createElement('canvas');
+                canv.id = 'canvas-' + files[Q]
+                canv.width = 1440
+                canv.height = 720
+                document.body.appendChild(canv)
+
                 newSource(
-                    ani01,
                     'canvas-' + files[Q],
                     files[Q], 
-                    boundary[Q]
+                    boundary[Q],
+                    defaultRampColors
                     )
             }
       }else{
           if(typeof map.getLayer('overlay' + 'canvas-' + files[Q]) != 'undefined'){
-            cancelAnimationFrame(ani01)
+
+            var canv = document.getElementById('canvas-' + files[Q])
+
             map.removeLayer('overlay' + 'canvas-' + files[Q]);
             map.removeSource('canvas-' + files[Q])
         }
@@ -55,23 +73,13 @@ function addCanvas(Q){
 }
 
 map.on('load', function(){
-    newSource(
-        ani01,
-        'canvas-layer00',
-        'layer00', 
-        [[-180, 81],[180, 81],[180, -81],[-180, -81]]
-        )
-
     for(i=0; i<files.length; i++){
-        loadData('./wind3/'+ files[i] +'.json')
+        loadData('./wind4/'+ files[i] +'.json')
     }
-    console.log(files, boundary , zoom)
     map.on('zoom', function(){
         for(j=0; j<files.length;j++){
             addCanvas(j)
         }
-
-        console.log(mapInFrame2(0))
     })
   })
 
