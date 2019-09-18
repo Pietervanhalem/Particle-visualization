@@ -23,10 +23,10 @@ function getJSON(url, callback) {
 
 function newSource(newCanvas, data, coords, colorRamp){
   function updateWind(windFile) {
-    getJSON('./wind3/' + windFile + '.json', function (windData) {
+    getJSON('./wind/' + windFile + '.json', function (windData) {
         const windImage = new Image();
         windData.image = windImage;
-        windImage.src = './wind3/' + windFile + '.png';
+        windImage.src = './wind/' + windFile + '.png';
         windImage.onload = function () {
             wind.setWind(windData);
         };
