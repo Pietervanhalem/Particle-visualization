@@ -203,15 +203,10 @@ precision highp float;\
          \r\n\
          ";
 
-var defaultRampColors = {
-    0.0: '#3288bd',
-    0.1: '#66c2a5',
-    0.2: '#abdda4',
-    0.3: '#e6f598',
-    0.4: '#fee08b',
-    0.5: '#fdae61',
-    0.6: '#f46d43',
-    1.0: '#d53e4f'
+var defaultRampColors = { // ['172313', '144b2a', '187328', '5f920c', 'aaac20', 'e1cd73', 'fffdcd']
+    0.0: '#00000000',
+    0.1: '#ffffffff',
+    1.0: '#ffffffff'
 };
 
 var WindGL = function WindGL(gl) {
