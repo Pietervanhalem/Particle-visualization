@@ -34,16 +34,16 @@ function newSource(newCanvas, data, coords, colorRamp){
   }
 
   function frame() {
-      if (wind.windData) {
-          wind.draw();
-      }
-    requestAnimationFrame(frame);
+    if (wind.windData) {
+      wind.draw();
     }
+    requestAnimationFrame(frame);
+  }
 
   var canvas = document.getElementById(newCanvas);
   var gl = canvas.getContext('webgl', {antialiasing: true});
   var wind = new WindGL(gl, colorRamp);
-  wind.fadeOpacity = 0.7; 
+  wind.fadeOpacity = 0.7;
   wind.numParticles = 10000;
 
   updateWind(data);
