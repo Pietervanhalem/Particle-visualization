@@ -1,0 +1,22 @@
+{
+  "name": "particle-visualization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pietervanhalem/Particle-visualization.git"
+  },
+  "author": "Pieter van Halem",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Pietervanhalem/Particle-visualization/issues"
+  },
+  "homepage": "https://github.com/Pietervanhalem/Particle-visualization#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
