@@ -73,16 +73,16 @@ function addCanvas(Q){
             if(typeof map.getLayer('overlay' + 'canvas-' + files[Q]) == 'undefined'){
                 var canv=document.createElement('canvas');
                 canv.id = 'canvas-' + files[Q]
-                canv.width = 1440
-                canv.height = 720
-                canv.style.display = 'none'
+                // canv.width = 1440
+                // canv.height = 720
+                // canv.style.display = 'none'
                 document.body.appendChild(canv)
 
                 newSource(
                     'canvas-' + files[Q],
                     files[Q], 
                     boundary[Q],
-                    pietersRampColors
+                    cmoceanRampColors
                     )
             }
       }else{
@@ -101,16 +101,16 @@ function addCanvas(Q){
 map.on('load', function(){
     var canv=document.createElement('canvas');
     canv.id = 'canvas-layer00'
-    canv.width = 1440
-    canv.height = 720
-    canv.style.display = 'none'
+    // canv.width = 1440
+    // canv.height = 720
+    // canv.style.display = 'none'
     document.body.appendChild(canv)
 
     newSource(
         'canvas-layer00',
         'layer00', 
         [[-180, 81],[180, 81],[180, -81],[-180, -81]],
-        pietersRampColors
+        cmoceanRampColors
         )
 
     for(i=0; i<files.length; i++){
