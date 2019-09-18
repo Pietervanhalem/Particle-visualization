@@ -222,6 +222,7 @@ var WindGL = function WindGL(gl, colorRamp) {
     this.resize();
 };
 
+
 var prototypeAccessors = { numParticles: {} };
 
 WindGL.prototype.resize = function resize () {
