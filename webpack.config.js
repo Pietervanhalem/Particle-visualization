@@ -1,18 +1,35 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
-    module : {
-        rules = [
+    entry: [
+        './src/js/app.js'
+    ],
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'main.js',
+        publicPath: '/dist'
+    },
+    module: {
+        rules: [
+            { 
+                test: /\.js$/, 
+                exclude: /node_modules/, 
+                loader: 'babel-loader'
+            },
             {
-                test: /\.html$/,
-                options: { minimize: true}
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ]
             }
         ]
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            template: "./src/index.html", 
-            filename: "./index.html"
-        }),
+
     ]
 }
+
+
+
