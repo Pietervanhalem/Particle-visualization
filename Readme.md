@@ -14,9 +14,9 @@ This package shows particle visualisation on an interactive map using:
 The package can be installed with nodes
 
 ``` bash
-npm install
+$ npm install
 
-% for localhost:
+for localhost:
 
-npm run build
+$ npm run build
 ```
