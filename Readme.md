@@ -16,7 +16,7 @@ The package can be installed with nodes
 ``` bash
 $ npm install
 
-for localhost:
+running on localhost:
 
 $ npm run build
 ```
