@@ -1,4 +1,3 @@
-
 var drawVert = require('../shaders/draw.vert.glsl');
 var drawFrag = require('../shaders/draw.frag.glsl');
 var quadVert = require('../shaders/quad.vert.glsl');
