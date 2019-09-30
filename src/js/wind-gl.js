@@ -91,10 +91,10 @@ function bindFramebuffer(gl, framebuffer, texture) {
 export var WindGL = function WindGL(gl, colorRamp) {
     this.gl = gl;
 
-    this.fadeOpacity = 0.996; // how fast the particle trails fade on each frame
-    this.speedFactor = 0.25; // how fast the particles move
-    this.dropRate = 0.003; // how often the particles move to a random place
-    this.dropRateBump = 0.01; // drop rate increase relative to individual particle speed
+    this.fadeOpacity = 0.9; // how fast the particle trails fade on each frame
+    this.speedFactor = 0.15; // how fast the particles move
+    this.dropRate = 0.03; // how often the particles move to a random place
+    this.dropRateBump = 0.; // drop rate increase relative to individual particle speed
 
     this.drawProgram = createProgram(gl, drawVert, drawFrag);
     this.screenProgram = createProgram(gl, quadVert, screenFrag);

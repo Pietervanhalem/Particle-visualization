@@ -3,11 +3,28 @@ import {newSource, map} from './script.js'
 
 var files = [
   'layer00',
+
   'layer21',
   'layer22',
   'layer23',
   'layer24',
-  'layer41'
+
+  // 'layer401',
+  // 'layer402',
+  // 'layer403',
+  // 'layer404',
+  // 'layer405',
+  // 'layer406',
+  // 'layer407',
+  // 'layer408',
+  // 'layer409',
+  // 'layer410',
+  // 'layer411',
+  // 'layer412',
+  // 'layer413',
+  // 'layer414',
+  // 'layer415',
+  // 'layer416'
 ]
 
 var boundary = []
@@ -29,6 +46,7 @@ function loadData(url){
   readTextFile(url, function(text){
     boundary.push(JSON.parse(text).boundary)
     zoom.push(JSON.parse(text).zoom)
+
   });
 }
 
@@ -145,6 +163,7 @@ function addCanvas(fileIndex){
 
 map.on('load', function(){
     addCanvas(0)
+
     map.on('zoom', function(){
         for(let j=0; j<files.length;j++){
                 addCanvas(j)

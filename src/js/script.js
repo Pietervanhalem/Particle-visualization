@@ -15,8 +15,7 @@ export var newSource = function(newCanvas, data, coords, colorRamp){
   var canvas = document.getElementById(newCanvas);
   var gl = canvas.getContext('webgl', {antialiasing: true});
   var wind = new WindGL(gl, colorRamp);
-  wind.fadeOpacity = 0.9;
-  wind.numParticles = 150*150;
+  wind.numParticles = 100*100;
 
   updateWind(data);
 
@@ -31,7 +30,7 @@ export var newSource = function(newCanvas, data, coords, colorRamp){
     "id": "overlay" + newCanvas,
     "source": newCanvas,
     "type": "raster",
-    "paint": {"raster-opacity": 0.2}
+    "paint": {"raster-opacity": 1}
     })
 
     frame();

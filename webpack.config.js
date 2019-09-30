@@ -3,7 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: [
-        './src/js/app.js'
+        './src/js/particles.js'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
