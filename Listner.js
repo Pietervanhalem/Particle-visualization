@@ -11,7 +11,7 @@ var files = [
 ]
 
 var whiteRampColors = {
-  0.0: '#00000000',
+  0.0: '#ffffffff',
   0.1: '#ffffffff',
   1.0: '#ffffffff'
 };
@@ -82,7 +82,7 @@ function addCanvas(Q){
         'canvas-' + files[Q],
         files[Q],
         boundary[Q],
-        pietersRampColors
+        whiteRampColors
       )
     }
   }else{
@@ -112,7 +112,7 @@ map.on('load', function(){
     'canvas-layer00',
     'layer00',
     [[-180, 81],[180, 81],[180, -81],[-180, -81]],
-    pietersRampColors
+    whiteRampColors
   )
 
   for(i=0; i<files.length; i++){

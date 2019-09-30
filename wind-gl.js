@@ -352,7 +352,11 @@ WindGL.prototype.updateParticles = function updateParticles () {
     // swap the particle state textures so the new one becomes the current one
     var temp = this.particleStateTexture0;
     this.particleStateTexture0 = this.particleStateTexture1;
-    this.particleStateTexture1 = temp;
+  this.particleStateTexture1 = temp;
+  var particleState = new Uint8Array(this._numParticles * 4);
+  gl.readPixels(0, 0, this.particleStateResolution, this.particleStateResolution, gl.RGBA, gl.UNSIGNED_BYTE, particleState);
+  console.log('particle state', particleState)
+
 };
 
 Object.defineProperties( WindGL.prototype, prototypeAccessors );

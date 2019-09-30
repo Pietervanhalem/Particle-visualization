@@ -36,6 +36,7 @@ function newSource(newCanvas, data, coords, colorRamp){
   function frame() {
     if (wind.windData) {
       wind.draw();
+      // wind.getOutOfDomain()
     }
     requestAnimationFrame(frame);
   }
