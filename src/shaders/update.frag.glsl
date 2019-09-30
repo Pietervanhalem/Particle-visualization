@@ -33,6 +33,9 @@ vec2 lookup_wind(const vec2 uv) {
 }
 
 void main() {
+  vec2 xy_pos = vec2(v_tex_pos);
+  xy_pos.x = xy_pos.x / 2.0;
+      
     vec4 color = texture2D(u_particles, v_tex_pos);
     vec2 pos = vec2(
         color.r / 255.0 + color.b,
@@ -48,6 +51,7 @@ void main() {
     // update particle position, wrapping around the date line
     pos = fract(1.0 + pos + offset);
 
+
     // a random seed to use for the particle drop
     vec2 seed = (pos + v_tex_pos) * u_rand_seed;
 
@@ -60,8 +64,12 @@ void main() {
         rand(seed + 2.1));
     pos = mix(pos, random_pos, drop);
 
+    vec4 rgb = vec4(fract(pos * 255.0), floor(pos * 255.0) / 255.0);
+    
+    if (v_tex_pos.x > 0.5) {
+      rgb.r = 1.0;
+    }
+
     // encode the new particle position back into RGBA
-    gl_FragColor = vec4(
-        fract(pos * 255.0),
-        floor(pos * 255.0) / 255.0);
+    gl_FragColor = rgb;
 }

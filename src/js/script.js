@@ -31,7 +31,7 @@ export var newSource = function(newCanvas, data, coords, colorRamp){
     "id": "overlay" + newCanvas,
     "source": newCanvas,
     "type": "raster",
-    "paint": {"raster-opacity": 0.2}
+    "paint": {"raster-opacity": 0.5}
     })
 
     frame();
