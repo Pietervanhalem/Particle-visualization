@@ -30,9 +30,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-
-    ]
 }
 
 

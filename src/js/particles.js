@@ -2,13 +2,13 @@ import '../css/main.css'
 import {newSource, map} from './script.js'
 
 var files = [
-  'layer00',
+  'layer0,0,0',
 
-  'layer21',
-  'layer22',
-  'layer23',
-  'layer24',
-
+  'layer0,0,1',
+  'layer1,0,1',
+  'layer0,1,1',
+  'layer1,1,1',
+ 
 ]
 
 var boundary = []
