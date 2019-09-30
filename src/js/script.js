@@ -2,12 +2,11 @@ import {WindGL} from './wind-gl.js'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2xvYmFsLWRhdGEtdmlld2VyIiwiYSI6ImNqdG9lYWQ3NTFsNWk0M3Fqb2Q5dXBpeWUifQ.3DvxuGByM33VNa59rDogWw';
 
-
 export var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/dark-v10',
-  center: [0, 0],
-  zoom: 1
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v10',
+    center: [0, 0],
+    zoom: 1
 });
 
 
